@@ -9,6 +9,7 @@ const router = express.Router();
 // Route d'inscription
 router.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
+  console.log("Registering: ",username, password);
 
   try {
     // Hash du mot de passe
