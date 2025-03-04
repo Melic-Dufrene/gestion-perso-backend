@@ -4,20 +4,22 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Character = require('../models/character');
+const mongoose = require('mongoose')
 const router = express.Router();
 
 // Route d'inscription
 router.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
   console.log("Registering: ",username, password);
-
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
     // Hash du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Création du personnage de l'utilisateur
     const newCharacter = new Character();
-    await newCharacter.save()
+    await newCharacter.save({session})
 
     // Création d'un nouvel utilisateur
     const newUser = new User({
@@ -28,11 +30,14 @@ router.post('/register', async (req, res) => {
     });
 
     // Sauvegarde dans la base de données
-    await newUser.save();
-
+    await newUser.save({session});
+    await session.commitTransaction();
     res.status(201).json({ message: 'Utilisateur créé avec succès' });
   } catch (error) {
+    await session.abortTransaction();
     res.status(500).json({ message: 'Erreur lors de la création de l\'utilisateur', error });
+  } finally {
+    session.endSession();
   }
 });
 
