@@ -5,7 +5,8 @@ const object = new mongoose.Schema({
     weight: { type: Number, default: 0 },
     price: { type: Number, default: 0 },
     is_magic: { type: Boolean, default: false },
-    desc: {type: String, default: ''}
+    desc: {type: String, default: ''},
+    id: {type: Number}
 })
 
 const characterSchema = new mongoose.Schema({
@@ -45,7 +46,7 @@ const characterSchema = new mongoose.Schema({
       po: { type: Number, default: 0 },
       pp: { type: Number, default: 0 }
     },
-    on: { type: [mongoose.Schema.Types.ObjectId], ref: 'object' },
+    on: { type: [mongoose.Schema.Types.ObjectId], ref: 'object', default: [] },
     bag: { type: [mongoose.Schema.Types.ObjectId], ref: 'object' }
   },
   abilities: {type: [String], default: []},

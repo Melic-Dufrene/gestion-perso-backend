@@ -20,7 +20,6 @@ router.post('/', async (req, res) => {
 
 router.patch('/', async (req, res) => {
     try {
-        console.log(req.body);
         await Character.findByIdAndUpdate(req.body._id, req.body);
         res.status(200).json({message: "Character saved successfully."})
     } catch (error) {
