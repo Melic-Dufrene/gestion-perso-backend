@@ -10,6 +10,7 @@ const object = new mongoose.Schema({
 })
 
 const characterSchema = new mongoose.Schema({
+  campaign: {type: String, default: "Laelith"},
   name: { type: String, default: "Name" },
   stats: {
     strength: { type: Number, default: 8 },

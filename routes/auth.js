@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
       username,
       password: hashedPassword,
       role,
-      personnage: newCharacter._id
+      personnages: [newCharacter._id]
     });
 
     // Sauvegarde dans la base de données
@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
 
     // Generate JWT
     const token = jwt.sign(
-      { username: user.username, role: user.role, personnage: user.personnage }, // Payload
+      { username: user.username, role: user.role, userId: user.id}, // Payload
       process.env.JWT_SECRET, // Secret key
       { expiresIn: '365d' } // Token expiration
     );
