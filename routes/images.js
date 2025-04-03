@@ -70,24 +70,17 @@ router.get("/all", (req, res) => {
 
         res.json({
             user: userId,
-            images: images.map(file => `/images/uploads/${file}`) // Return accessible image URLs
+            images: images.map(file => ({"url": `/images/uploads/${file}`,"id":`${file}`})) // Return accessible image URLs
         });
     });
 });
 
 router.delete("/one/:id", (req, res) => {
     const userId = req.user.userId;
-    const id = parseInt(req.params.id);
-    const imageIndex = images.findIndex(img => img.id === id);
-
-    if (imageIndex === -1) return res.status(404).json({ error: "Image not found" });
-
-    const imagePath = path.join(_directory, "uploads", userId, path.basename(images[imageIndex].url));
+    const imagePath = path.join(_directory, "uploads", userId, req.params.id);
     fs.unlink(imagePath, err => {
         if (err) console.error("Failed to delete file:", err);
     });
-
-    images.splice(imageIndex, 1);
     res.json({ message: "Image deleted" });
 });
 
