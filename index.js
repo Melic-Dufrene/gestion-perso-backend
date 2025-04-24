@@ -27,8 +27,8 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRouter);
 
 
-app.use('/api/character',log, auth, charRouter);
-app.use('/api/user',auth, log, userRouter);
+app.use('/api/character', auth, charRouter);
+app.use('/api/user', auth, userRouter);
 
 app.use('/api/images/', auth, imageRouter)
 

@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const object = new mongoose.Schema({
-    name: { type: String, default: "Object" },
-    weight: { type: Number, default: 0 },
-    price: { type: Number, default: 0 },
-    is_magic: { type: Boolean, default: false },
-    desc: {type: String, default: ''},
-    id: {type: Number}
+  name: { type: String, default: "Object" },
+  weight: { type: Number, default: 0 },
+  price: { type: Number, default: 0 },
+  is_magic: { type: Boolean, default: false },
+  desc: { type: String, default: '' },
+  id: { type: Number }
 })
 
 const characterSchema = new mongoose.Schema({
-  campaign: {type: String, default: "Laelith"},
+  campaign: { type: String, default: "Laelith" },
   name: { type: String, default: "Name" },
   stats: {
     strength: { type: Number, default: 8 },
@@ -36,9 +36,17 @@ const characterSchema = new mongoose.Schema({
     front_w_shield: { type: Number, default: 10 },
     taco: { type: Number, default: 20 },
   },
-  speed: { type: Number, default: 0 },
+  speed: {
+    base_speed: { type: String, default: "9\"" },
+    riding_speed: { type: String, default: "15\"" },
+    flying_speed: { type: String, default: "15\"" },
+    swimming_speed: { type: String, default: "2\"" },
+  },
+  weapons: {
+    permitted_count: { type: Number, default: 1 },
+    list: ["Inconnue"]
+  },
   alignement: { type: String, default: "Neutre/Neutre" },
-  swimming: { type: String, default: false },
   riding: { type: String, default: false },
   inventory: {
     bursary: {
@@ -50,8 +58,8 @@ const characterSchema = new mongoose.Schema({
     on: { type: [mongoose.Schema.Types.ObjectId], ref: 'object', default: [] },
     bag: { type: [mongoose.Schema.Types.ObjectId], ref: 'object' }
   },
-  abilities: {type: [String], default: []},
-  languages: {type: String, default: 'Commun'},
+  abilities: { type: [String], default: [] },
+  languages: { type: String, default: 'Commun' },
 });
 
 const Character = mongoose.model('Character', characterSchema);

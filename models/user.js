@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   spell_filters: {
     lvls: {type: [Number], default:[1, 2, 3, 4, 5, 6, 7, 8, 9]},
     professions: {type: [String], default:["mage", "clerc", "druide", "illusionniste"]}
-  }
+  },
+  dmOf: { type: [String], default: [] },
 });
 
 const User = mongoose.model('User', userSchema);

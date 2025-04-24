@@ -13,6 +13,17 @@ router.get('/all', async (req, res) => {
     res.status(200).json(charlist);
 });
 
+router.get('/allplayers', async (req, res) => {
+    const username = req.user.username
+    const user = await User.findOne({username});
+    let charlist = [];
+    for (const campaign of user.dmOf) {
+        const characters = await Character.find({campaign});
+        charlist = [...charlist, ...characters];
+    }
+    res.status(200).json(charlist);    
+})
+
 router.post('/one/:id', async (req, res) => {
     try {
         await Character.findByIdAndUpdate(req.body._id, req.body);
